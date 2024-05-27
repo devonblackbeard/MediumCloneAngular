@@ -26,7 +26,7 @@ export class RegisterComponent {
 
   constructor(
     private fb: FormBuilder,
-    private store: Store,
+    private store: Store
   ) {}
 
   onSubmit() {
