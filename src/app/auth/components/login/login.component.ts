@@ -2,16 +2,16 @@ import {Component} from '@angular/core'
 import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms'
 import {Store} from '@ngrx/store'
 import {authActions} from '../../store/actions'
-import {RegisterRequestInterface} from '../../types/registerRequest.interface'
 import {RouterLink} from '@angular/router'
 import {selectIsSubmitting, selectValidationErrors} from '../../store/reducer'
 import {CommonModule} from '@angular/common'
 import {combineLatest} from 'rxjs'
 import {BackendErrorMessages} from 'src/app/shared/components/backendErrorMessages/backendErrorMessages.component'
+import {LoginRequestInterface} from '../../types/loginRequest.interface'
 
 @Component({
-  selector: 'mc-register',
-  templateUrl: './register.component.html',
+  selector: 'mc-login',
+  templateUrl: './login.component.html',
   standalone: true,
   imports: [
     ReactiveFormsModule,
@@ -20,13 +20,11 @@ import {BackendErrorMessages} from 'src/app/shared/components/backendErrorMessag
     BackendErrorMessages,
   ],
 })
-export class RegisterComponent {
+export class LoginComponent {
   form = this.fb.nonNullable.group({
-    username: ['', Validators.required],
     email: '',
     password: '',
   })
-
 
   data$ = combineLatest({
     isSubmitting: this.store.select(selectIsSubmitting),
@@ -36,9 +34,9 @@ export class RegisterComponent {
   constructor(private fb: FormBuilder, private store: Store) {}
 
   onSubmit() {
-    const request: RegisterRequestInterface = {
+    const request: LoginRequestInterface = {
       user: this.form.getRawValue(),
     }
-    this.store.dispatch(authActions.register({request}))
+    this.store.dispatch(authActions.login({request}))
   }
 }
