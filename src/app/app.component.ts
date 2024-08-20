@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core'
 import {RouterOutlet} from '@angular/router'
-import { TopBarComponent } from './shared/components/backendErrorMessages/topBar/topBar.component'
+import { TopBarComponent } from './shared/components/topBar/topBar.component'
 import { authActions } from './auth/store/actions'
 import { Store } from '@ngrx/store'
 
