@@ -42,11 +42,16 @@ export class FeedComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(feedActions.getFeed({url: this.apiUrl}))
+    // purposely not unsubscribing
     this.route.queryParams.subscribe((params: Params) => {
       // {page: '1'}
-      console.log(params);
-      
+      console.log('params', params)
       this.currentPage = Number(params['page'] || '1')
+      this.fetchFeed();
     })
+  }
+
+  fetchFeed(): void {
+    this.store.dispatch(feedActions.getFeed({url: this.apiUrl}))
   }
 }
