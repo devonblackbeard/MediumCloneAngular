@@ -21,8 +21,13 @@
         <p>{{ article.description }}</p>
         <span>Read more...</span>
         TAG LIST
-      </a>
+    </a>
     </div>
-    PAGINATION
+    <mc-pagination
+     [total]="data.feed.articlesCount"
+     [limit]="limit"
+     [url]="baseUrl"
+     >
+    </mc-pagination>
   </div>
 </ng-container>
