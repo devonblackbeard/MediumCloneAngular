@@ -9,6 +9,8 @@ import {ErrorMessageComponent} from '../errorMessage/errorMessage.component'
 import {LoadingComponent} from '../loading/loading.component'
 import {environment} from 'src/environments/environment.development'
 import {PaginationComponent} from '../pagination/pagination.component'
+import queryString from 'query-string'
+import {TagListComponent} from '../tagList/tagList.component'
 
 @Component({
   selector: 'mc-feed',
@@ -20,6 +22,7 @@ import {PaginationComponent} from '../pagination/pagination.component'
     ErrorMessageComponent,
     LoadingComponent,
     PaginationComponent,
+    TagListComponent,
   ],
 })
 export class FeedComponent implements OnInit {
@@ -47,11 +50,22 @@ export class FeedComponent implements OnInit {
       // {page: '1'}
       console.log('params', params)
       this.currentPage = Number(params['page'] || '1')
-      this.fetchFeed();
+      this.fetchFeed()
     })
   }
 
   fetchFeed(): void {
-    this.store.dispatch(feedActions.getFeed({url: this.apiUrl}))
+    const offset = this.currentPage * this.limit - this.limit
+    console.log(offset)
+    const parsedUrl = queryString.parseUrl(this.apiUrl)
+    console.log('offset', offset, parsedUrl)
+    const stringifiedParams = queryString.stringify({
+      limit: this.limit,
+      offset,
+      ...parsedUrl.query,
+    })
+    const apiUrlWithParams = `${parsedUrl.url}?${stringifiedParams}`
+
+    this.store.dispatch(feedActions.getFeed({url: apiUrlWithParams}))
   }
 }
